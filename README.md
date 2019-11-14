@@ -35,7 +35,7 @@ cloudfront = {
 ```
 
 ```dig
-www.example.com. 3600 IN CNAME abc1234567890.cloudfront.net.
+www.example.com. 3600 IN CNAME d125amghsb8rur.cloudfront.net.
 ```
 
 During the `terraform apply` an SSL certificate will be generated. The administrative contact(s) of the domain will receive an email requesting confirmation.
