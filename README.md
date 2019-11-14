@@ -11,8 +11,9 @@ Futhermore a lambda function will be deployed which will invalidate CloudFront o
 ## Usage
 
 ```hcl
-module "web" {
-  source       = ".../path/to/module"
+module "s3cloudfront-page" {
+  source       = "udondan/s3-cloudfront-page/aws"
+  version      = "0.1.0"
   domain_name  = "www.example.com" // www. or any other subdomain is mandatory! Apex records are not supported at this time
   root         = "./public"
 }
@@ -40,8 +41,9 @@ During the `terraform apply` an SSL certificate will be generated. The administr
 In case your public folder contains content you do not want to sync to s3, you can provide a filter. This might be interesting if you use JavaScript or font libraries which contain files you don't need to serve to customers. E.g. [Font Awesome](https://fontawesome.com/) contains some 1700 sprite and svg files not required by the frontend. You can filter them like so:
 
 ```hcl
-module "web" {
-  source       = ".../path/to/module"
+module "s3cloudfront-page" {
+  source       = "udondan/s3-cloudfront-page/aws"
+  version      = "0.1.0"
   domain_name  = "www.example.com"
   root         = "./public"
   filter_paths = ".*/font-awesome/(sprites|svgs)/.*"
@@ -69,10 +71,11 @@ By default only file with these extensions will be synced to S3:
 If you need to sync additional file types, you need to provide the expected mime type:
 
 ```hcl
-module "web" {
-  source               = ".../path/to/module"
-  domain_name          = "www.example.com"
-  root                 = "./public"
+module "s3cloudfront-page" {
+  source      = "udondan/s3-cloudfront-page/aws"
+  version     = "0.1.0"
+  domain_name = "www.example.com"
+  root        = "./public"
   additional_filetypes = {
     zip = "application/zip",
     mp3 = "audio/mpeg",
