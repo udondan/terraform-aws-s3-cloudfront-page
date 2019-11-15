@@ -3,7 +3,9 @@ name: Terraform
 env:
   TF_ACTIONS_VERSION: 0.12.15
 on:
-  - push
+  - push:
+      branches:
+        - master
   - pull_request
 jobs:
   terraform:
