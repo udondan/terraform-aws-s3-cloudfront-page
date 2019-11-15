@@ -1,5 +1,5 @@
 module "s3-cloudfront-page" {
-  source       = ".."
+  source       = "./.."
   domain_name  = "www.example.com"
   root         = "${path.module}/public"
   filter_paths = ".*/font-awesome/(sprites|svgs)/.*"
