@@ -9,7 +9,6 @@ locals {
     length(regexall(var.filter_paths, v)) == 0) // invalid paths
     )
   ])
-  valid_files = merge(var.default_filetypes, var.additional_filetypes)
 }
 
 data "aws_iam_policy_document" "s3_public_read_policy" {
