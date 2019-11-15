@@ -2,11 +2,15 @@
 
 Terraform module for publishing a static page via AWS CloudFront.
 
-This module creates all required resources, except those related to the domain record. You need to create a CNAME record for your domain pointing to the CloudFront domain name.
+- S3 bucket creation
+- Syncing `root` folder to S3 via Terraform resource (not local-exec) and therefore:
+  - you'll see all planned object changes in a `terraform plan`
+  - works nicely with Terraform Cloud.
+- Creates CloudFront distribution
+- Creates SSL certificate
+- Installs Lambda function for invalidating CloudFront cache, triggered by changes on S3 objects
 
-This module also takes care of syncing the content to the S3 bucket via Terraform resources (not local-exec) and therefore works nicely with Terraform Cloud.
-
-Futhermore a lambda function will be deployed which will invalidate CloudFront objects whenever a file is updated on S3.
+The module **does not** take care of the DNS record. You need to create a CNAME record for your domain pointing to the CloudFront domain name.
 
 ## Usage
 
@@ -39,6 +43,8 @@ www.example.com. 3600 IN CNAME d125amghsb8rur.cloudfront.net.
 ```
 
 During the `terraform apply` an SSL certificate will be generated. The administrative contact(s) of the domain will receive an email requesting confirmation.
+
+When initially applying, bring some patience. Creating a new CloudFront distribution can take >20 minutes.
 
 ---
 
