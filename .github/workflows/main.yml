@@ -1,5 +1,5 @@
 ---
-name: Terraform GitHub Actions
+name: Terraform
 env:
   TF_ACTIONS_VERSION: 0.12.15
 on:

@@ -1,5 +1,7 @@
 # S3 CloudFront page
 
+[![Actions Status](https://github.com/udondan/terraform-aws-s3-cloudfront-page/workflows/Terraform/badge.svg)](https://github.com/udondan/terraform-aws-s3-cloudfront-page/blob/master/.github/workflows/main.yml)
+
 Terraform module for publishing a static page via AWS CloudFront.
 
 - S3 bucket creation
