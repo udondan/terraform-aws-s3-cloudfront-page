@@ -17,7 +17,7 @@ The module **does not** take care of the DNS record. You need to create a CNAME 
 ```hcl
 module "s3-cloudfront-page" {
   source       = "udondan/s3-cloudfront-page/aws"
-  version      = "0.1.0"
+  version      = "0.2.0"
   domain_name  = "www.example.com" // www. or any other subdomain is mandatory! Apex records are not supported at this time
   root         = "./public"
 }
@@ -48,48 +48,72 @@ When initially applying, bring some patience. Creating a new CloudFront distribu
 
 ---
 
-In case your public folder contains content you do not want to sync to s3, you can provide a filter. This might be interesting if you use JavaScript or font libraries which contain files you don't need to serve to customers. E.g. [Font Awesome](https://fontawesome.com/) contains some 1700 sprite and svg files not required by the frontend. You can filter them like so:
+In case your public folder contains content you do not want to sync to s3, you can provide a filter. This might be interesting if you use JavaScript or font libraries which contain files you don't need to serve to customers. E.g. [Font Awesome](https://fontawesome.com/) contains some 1600 sprite and svg files not required by the frontend. You can filter them like so:
 
 ```hcl
 module "s3-cloudfront-page" {
   source       = "udondan/s3-cloudfront-page/aws"
-  version      = "0.1.0"
+  version      = "0.2.0"
   domain_name  = "www.example.com"
   root         = "./public"
   filter_paths = ".*/font-awesome/(sprites|svgs)/.*"
 }
 ```
 
+Why should you care? Each file will be synced by Terraform as a separate resource. Even when there are no changes, Terraform will require quite some time to compare the state with the local files.
+
+---
+
 By default only file with these extensions will be synced to S3:
 
-- html
 - css
-- js
-- pdf
-- ico
-- png
-- gif
-- jpg
-- jpeg
-- map
+- doc
+- docx
+- dot
 - eot
+- gif
+- gz
+- htm
+- html
+- ico
+- jpeg
+- jpg
+- js
+- json
+- map
+- mp3
+- mp4
+- mpeg
+- pdf
+- png
+- pot
+- pps
+- ppt
+- ppz
+- rtf
 - svg
+- tar
+- tif
+- tiff
 - ttf
+- txt
 - woff
 - woff2
+- xls
+- xlsx
+- xml
+- zip
 
 If you need to sync additional file types, you need to provide the expected mime type:
 
 ```hcl
 module "s3-cloudfront-page" {
   source      = "udondan/s3-cloudfront-page/aws"
-  version     = "0.1.0"
+  version     = "0.2.0"
   domain_name = "www.example.com"
   root        = "./public"
   additional_filetypes = {
-    zip = "application/zip",
-    mp3 = "audio/mpeg",
-    mp4 = "video/mp4",
+    swf = "application/x-shockwave-flash"
   }
 }
 ```
